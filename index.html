@@ -1,23 +1,26 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Bonjour Café | Доставка та Меню</title>
-    <!-- Fonts & Icons -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Экран регистрации (Andy's Pizza Style Auth) -->
+    <!-- Реєстраційний оверлей -->
     <div id="auth-overlay" class="auth-overlay">
         <div class="auth-card">
             <div class="brand-logo">Bonjour Café</div>
-            <h2>Вхід до кабінету</h2>
-            <p>Зареєструйтесь, щоб побачити наше меню та зробити замовлення</p>
+            <h2>Ласкаво просимо</h2>
+            <p>Зареєструйтесь, щоб переглянути меню та замовити доставку</p>
             <form id="main-auth-form" class="auth-form">
                 <div class="input-group">
                     <i class="fa fa-user"></i>
@@ -29,73 +32,76 @@
                 </div>
                 <div class="input-group">
                     <i class="fa fa-lock"></i>
-                    <input type="password" placeholder="Пароль" required>
+                    <input type="password" id="reg-password" placeholder="Пароль" required>
                 </div>
-                <button type="submit" class="auth-submit-btn">Увійти</button>
+                <button type="submit" class="auth-submit-btn">Розпочати</button>
             </form>
         </div>
     </div>
 
-    <!-- Основной контент -->
+    <!-- Основний контент (прихований до реєстрації) -->
     <div id="site-content" class="hidden-site">
         <header class="main-header">
             <div class="header-container">
                 <div class="logo-area">
+                    <svg class="custom-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#2d4c3b" stroke="#c5a059" stroke-width="2"/>
+                        <path d="M50 20 L55 40 L75 35 L58 48 L65 68 L50 55 L35 68 L42 48 L25 35 L45 40 L50 20Z" fill="#c5a059" opacity="0.9"/>
+                        <circle cx="50" cy="48" r="6" fill="#4B3621"/>
+                        <path d="M50 30 L52 36 L58 34 L53 38 L56 44 L50 41 L44 44 L47 38 L42 34 L48 36 L50 30Z" fill="#f5e6d3"/>
+                        <path d="M70 50 L64 52 L66 58 L62 53 L56 56 L59 50 L56 44 L62 47 L66 42 L64 48 L70 50Z" fill="#f5e6d3"/>
+                        <path d="M50 70 L48 64 L42 66 L47 62 L44 56 L50 59 L56 56 L53 62 L58 66 L52 64 L50 70Z" fill="#f5e6d3"/>
+                        <path d="M30 50 L36 48 L34 42 L38 47 L44 44 L41 50 L44 56 L38 53 L34 58 L36 52 L30 50Z" fill="#f5e6d3"/>
+                    </svg>
                     <span class="brand-name">Bonjour Café</span>
                 </div>
                 <nav class="main-nav">
                     <a href="#about">Про нас</a>
                     <a href="#full-menu">Меню</a>
-                    <a href="checkout.html">Доставка</a>
+                    <a href="#map-section">Доставка</a>
                 </nav>
                 <div class="user-actions">
                     <span id="user-display" class="user-name-tag"></span>
                     <button onclick="logout()" class="logout-icon-btn" title="Вийти">
                         <i class="fa fa-sign-out-alt"></i>
                     </button>
-                    <div class="contact-number">
-                        <i class="fa fa-phone"></i> +373 22 00-00-00
-                    </div>
                 </div>
             </div>
         </header>
 
         <main>
-            <!-- Блок с фото (Hero Visuals) -->
-            <section class="visuals-grid">
-                <div class="visual-item">
-                    <img src="view.png" alt="Екстер'єр кафе">
-                </div>
-                <div class="visual-item">
-                    <img src="banner.png" alt="Спеціальна пропозиція">
-                </div>
+            <section class="visuals-grid fade-up">
+                <div class="visual-item"><img src="view.png" alt="Екстер'єр кафе"></div>
+                <div class="visual-item"><img src="banner.png" alt="Спеціальна пропозиція"></div>
             </section>
 
-            <!-- Про кафе (About section with Frame) -->
-            <section id="about" class="about-section">
+            <section id="about" class="about-section fade-left">
                 <div class="frame-wrapper" style="background-image: url('frame.png');">
                     <div class="about-inner-text">
                         <h1>Bonjour Café</h1>
                         <p>Відчуйте атмосферу справжнього Парижа в Кишиневі. Ми поєднали традиційні рецепти французьких кондитерів з вишуканою кавою сорту арабіка.</p>
-                        <div class="location-badge">
-                            <i class="fa fa-map-marker-alt"></i> Паркова алея, 12, Кишинів
-                        </div>
+                        <div class="location-badge"><i class="fa fa-map-marker-alt"></i> Паркова алея, 12, Кишинів</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Меню (Single Image) -->
-            <section id="full-menu" class="menu-display-section">
+            <section id="full-menu" class="menu-display-section fade-right">
                 <h2 class="section-heading">Наше Меню</h2>
-                <div class="menu-image-container">
-                    <img src="menu.png" alt="Основне меню кафе" class="main-menu-graphic">
+                <div class="menu-image-container"><img src="menu.png" alt="Основне меню кафе" class="main-menu-graphic"></div>
+            </section>
+
+            <section id="map-section" class="delivery-map-section fade-up">
+                <h2 class="section-heading">📍 Вибір адреси доставки</h2>
+                <div class="map-container"><div id="delivery-map" style="height: 400px; width: 100%; border-radius: 20px; z-index: 1;"></div></div>
+                <div class="delivery-info">
+                    <p id="selected-address" class="address-display">Клікніть на карту, щоб обрати адресу доставки</p>
+                    <button id="confirm-delivery" class="confirm-delivery-btn">Підтвердити адресу</button>
                 </div>
+                <div class="delivery-note"><i class="fa fa-truck"></i> Вартість доставки: 40 MDL (у межах міста)</div>
             </section>
         </main>
 
-        <footer class="site-footer">
-            <p>&copy; 2026 Bonjour Café. Всі права захищені.</p>
-        </footer>
+        <footer class="site-footer"><p>&copy; 2026 Bonjour Café. Всі права захищені.</p></footer>
     </div>
 
     <script src="app.js"></script>
