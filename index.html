@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonjour Café | Доставка та Меню</title>
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Экран регистрации (Andy's Pizza Style Auth) -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-card">
+            <div class="brand-logo">Bonjour Café</div>
+            <h2>Вхід до кабінету</h2>
+            <p>Зареєструйтесь, щоб побачити наше меню та зробити замовлення</p>
+            <form id="main-auth-form" class="auth-form">
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="reg-name" placeholder="Ваше ім'я" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" id="reg-email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">Увійти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div id="site-content" class="hidden-site">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <span class="brand-name">Bonjour Café</span>
+                </div>
+                <nav class="main-nav">
+                    <a href="#about">Про нас</a>
+                    <a href="#full-menu">Меню</a>
+                    <a href="checkout.html">Доставка</a>
+                </nav>
+                <div class="user-actions">
+                    <span id="user-display" class="user-name-tag"></span>
+                    <button onclick="logout()" class="logout-icon-btn" title="Вийти">
+                        <i class="fa fa-sign-out-alt"></i>
+                    </button>
+                    <div class="contact-number">
+                        <i class="fa fa-phone"></i> +373 22 00-00-00
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Блок с фото (Hero Visuals) -->
+            <section class="visuals-grid">
+                <div class="visual-item">
+                    <img src="view.png" alt="Екстер'єр кафе">
+                </div>
+                <div class="visual-item">
+                    <img src="banner.png" alt="Спеціальна пропозиція">
+                </div>
+            </section>
+
+            <!-- Про кафе (About section with Frame) -->
+            <section id="about" class="about-section">
+                <div class="frame-wrapper" style="background-image: url('frame.png');">
+                    <div class="about-inner-text">
+                        <h1>Bonjour Café</h1>
+                        <p>Відчуйте атмосферу справжнього Парижа в Кишиневі. Ми поєднали традиційні рецепти французьких кондитерів з вишуканою кавою сорту арабіка.</p>
+                        <div class="location-badge">
+                            <i class="fa fa-map-marker-alt"></i> Паркова алея, 12, Кишинів
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Меню (Single Image) -->
+            <section id="full-menu" class="menu-display-section">
+                <h2 class="section-heading">Наше Меню</h2>
+                <div class="menu-image-container">
+                    <img src="menu.png" alt="Основне меню кафе" class="main-menu-graphic">
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 Bonjour Café. Всі права захищені.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
